@@ -18,7 +18,12 @@ namespace prep.utility.searching
 
     public IMatchA<Target> equal_to_any(params PropertyType[] values)
     {
-      throw new NotImplementedException();
+        IMatchA<Target> match = equal_to(values[0]);
+        for (int i = 1; i < values.Length; ++i )
+        {
+            match = new OrMatch<Target>(match, equal_to(values[i]));
+        }
+        return match;
     }
   }
 }

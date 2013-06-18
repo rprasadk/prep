@@ -29,7 +29,10 @@ namespace prep.utility.searching
 
     public IMatchA<Target> not_equal_to(PropertyType value)
     {
-      throw new NotImplementedException();
+      return new AnonymousMatch<Target>( x =>
+          {
+              return !(new List<PropertyType> {value}).Contains(accessor(x));
+          });
     }
   }
 }

@@ -1,4 +1,6 @@
-﻿namespace prep.utility.searching
+﻿using System;
+
+namespace prep.utility.searching
 {
   public class AnonymousMatch<Item> : IMatchA<Item>
   {
@@ -12,6 +14,11 @@
     public bool matches(Item item)
     {
       return condition(item);
+    }
+
+    public static IMatchA<Item> Create(Criteria<Item> condition)
+    {
+        return new AnonymousMatch<Item>(condition);
     }
   }
 }

@@ -19,7 +19,7 @@ namespace prep.utility.searching
 
     public IMatchA<ItemToBuildSpecificationOn> greater_than(PropertyType comparison_value)
     {
-      return new AnonymousMatch<ItemToBuildSpecificationOn>(x =>
+        return AnonymousMatch<ItemToBuildSpecificationOn>.Create(x =>
       {
         var value = accessor(x);
         var result = value.CompareTo(comparison_value);
@@ -29,7 +29,7 @@ namespace prep.utility.searching
 
     public IMatchA<ItemToBuildSpecificationOn> between(PropertyType start, PropertyType end)
     {
-      return new AnonymousMatch<ItemToBuildSpecificationOn>(x =>
+      return AnonymousMatch<ItemToBuildSpecificationOn>.Create(x =>
       {
         var value = accessor(x);
 

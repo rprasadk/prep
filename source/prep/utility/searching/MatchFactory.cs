@@ -18,12 +18,12 @@ namespace prep.utility.searching
 
     public IMatchA<Target> equal_to_any(params PropertyType[] values)
     {
-      return new AnonymousMatch<Target>(x =>
+      return AnonymousMatch<Target>.Create(x =>
       {
         var value = accessor(x);
         var possible_values = new List<PropertyType>(values);
         return possible_values.Contains(value);
-      });
+      });      
     }
 
     public IMatchA<Target> not_equal_to(PropertyType value)

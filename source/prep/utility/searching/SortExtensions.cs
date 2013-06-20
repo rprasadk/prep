@@ -21,6 +21,14 @@ namespace prep.utility.searching
             return new SortExtension<Target>(items).by(accessor, sort_direction); //TBD redesign
         }
 
+        public static SortExtension<Target> sortby<Target, PropertyType>
+            (this IEnumerable<Target> items, PropertyAccessor<Target, PropertyType> accessor,
+            PropertyType[] customOrder,
+            SortDirection sort_direction = SortDirection.Ascending)
+        {
+            return new SortExtension<Target>(items).by(accessor, sort_direction); //TBD redesign
+        }
+
         //public static SortExtension<Target> by(
         //    this SortExtension<Target> extension_point,)
     }

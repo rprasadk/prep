@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
+using Rhino.Mocks;
 using developwithpassion.specifications.extensions;
 using developwithpassion.specifications.rhinomocks;
 using prep.collections;
@@ -429,6 +430,51 @@ namespace prep.specs
         movieList.Add(the_ring);
         movieList.Add(theres_something_about_mary);
       }
+    }
+
+    public class AttributeMatchForTest : AttributeMatch<Movie, ProductionStudio>
+    {
+        public AttributeMatchForTest(PropertyAccessor<Movie, ProductionStudio> accessor, 
+            IMatchA<ProductionStudio> value_specification) : base(accessor, value_specification)
+        {
+        }
+    }
+    public abstract class concern_for_attribute_match
+        : Observes<AttributeMatch<Movie, ProductionStudio>>
+    {
+        
+    }
+
+    public class when_matching_attributes : concern_for_attribute_match
+    {
+        private Establish e = () =>
+            {                
+                propertyAccesor = depends.on<PropertyAccessor<Movie, ProductionStudio>>();
+                condition = depends.on<IMatchA<ProductionStudio>>();
+
+                propertyAccesor.setup(pa => pa(Arg<Movie>.Is.Anything)).Return(ProductionStudio.MGM);
+                condition.setup(c => c.matches(Arg<ProductionStudio>.Is.Equal(ProductionStudio.MGM))).Return(true);
+            };
+
+        private It should_return_true_when_matches = () =>
+            {
+                result = sut.matches(new Movie {production_studio = ProductionStudio.MGM });
+
+                //propertyAccesor.received(p => p);
+                //condition.received(c => c.Equals(Arg<ProductionStudio>.Is.Equal(ProductionStudio.MGM)));
+                result.Equals(true);
+
+            };
+
+        private It should_return_false_when_does_not_match = () =>
+        {
+            result = sut.matches(new Movie { production_studio = ProductionStudio.Dreamworks });
+            result.Equals(false);
+        };
+
+        private static PropertyAccessor<Movie, ProductionStudio> propertyAccesor;
+        private static IMatchA<ProductionStudio> condition;
+        private static bool result;
     }
   }
 }

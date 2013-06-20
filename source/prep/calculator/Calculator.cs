@@ -1,15 +1,18 @@
 using System;
 using System.Data;
+using System.Security;
+using System.Security.Principal;
+using System.Threading;
 
 namespace prep.calculator
 {
   public class Calculator
   {
-    IDbConnection connection;
+    IDbConnection connection;     
 
     public Calculator(IDbConnection connection, int offset, int offset2)
-    {
-      this.connection = connection;
+    {      
+        this.connection = connection;
     }
 
     public int add(int i, int i1)
@@ -29,7 +32,8 @@ namespace prep.calculator
 
     public void shut_off()
     {
-      throw new NotImplementedException();
+      if(!Thread.CurrentPrincipal.IsInRole("Admin"))
+          throw new SecurityException();
     }
   }
 }

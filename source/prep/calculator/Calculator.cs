@@ -1,10 +1,15 @@
+using System;
+
 namespace prep.calculator
 {
     public class Calculator
     {
-        public int add(int i, int i1)
+        public int add(int x, int y)
         {
-            return i + i1;
-        }
+           if (Math.Sign(x) != Math.Sign(y))
+               throw new ArgumentException();
+
+            return x + y;
+        }    
     }
 }

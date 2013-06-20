@@ -346,7 +346,7 @@ namespace prep.specs
         //var results = sut.sort_all_movies_by_movie_studio_and_year_published();
 
           var results = sut.all_movies()
-                           .sortby(m => m.title, SortDirection.Descending)
+                           .sortby(m => m.production_studio, new[]{ProductionStudio.MGM, ProductionStudio.Pixar})
                            .thenby(m => m.date_published)
                            .go();
 
